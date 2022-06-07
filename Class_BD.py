@@ -24,9 +24,28 @@ class BD():
         self.consulta="INSERT INTO `cliente` (`DNI`, `Nombre`, `Telefono`, `Correo`) VALUES ("+self.valores+")"
         self.mycursor.execute(self.consulta)
         self.mydb.commit()
-        print("todo bien")
     
+    def Insertar_Co(self,v1,v2,v3,v4,v5):
+        self.valores = "'"+v1+"','"+v2+"','"+v3+"','"+v4+"',"+v5+"'"
+        self.consulta="INSERT INTO `coche` (`Matricula`, `DNI`, `Modelo`, `Marca`, `Color`) VALUES ("+self.valores+")"
+        self.mycursor.execute(self.consulta)
+        self.mydb.commit() #Probado desde aqui
+    
+    def Insertar_A(self,v1,v2,v3,v4,v5,v6):
+        self.valores = "'"+v1+"','"+v2+"','"+v3+"','"+v4+"',"+v5+"',"+v6+"'"
+        self.consulta="INSERT INTO `arregla` (`Cod_Averia`, `Matricula`, `DNI`, `Fech_Repara`, `Horas`, `Problema`) VALUES ("+self.valores+")"
+        self.mycursor.execute(self.consulta)
+        self.mydb.commit()
+    
+    def Insertar_M(self,v1,v2,v3,v4): #Solo para Cliente
+        self.valores = "'"+v1+"','"+v2+"','"+v3+"','"+v4+"'"
+        self.consulta="INSERT INTO `mecanico` (`DNI`, `Nombre`, `Fecha_Contrata`, `Salario`) VALUES ("+self.valores+")"
+        self.mycursor.execute(self.consulta)
+        self.mydb.commit()   
+    
+    
+a=BD()
 # print(BD.Consulta("DNI,nombre","cliente"))  -> Ejemplo de Consulta
 # print(BD.Consulta_Condicion("*","cliente","DNI=26509218")) -> Ejemplo de consulta con condicion
-a=BD()
-a.Insertar_C("11111111", "manolito", "111111111", "noseesunejemplo")
+#a.Insertar_C("11111111", "manolito", "111111111", "noseesunejemplo")
+#a.Insertar_Co("5555555","26509218","Ford","Fiesta","Verde")
