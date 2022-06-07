@@ -55,7 +55,7 @@ while not menus:
                     print("Ese usuario Si existe ")
                     ###
                     ### Dar de alta coche
-                    if a.Consulta_Condicion("*","coche","Matricula="+matricula) != []:
+                    if a.Consulta_Condicion("*","coche","Matricula="+"'"+matricula+"'") != []:
                         print("Ese vehiculo ya existe")
                     else:
                         print("El vehiculo no existe lo damos de alta")
@@ -65,7 +65,7 @@ while not menus:
                         characters = "[](),'" #caracteres que vamos a quitar
                         for x in range(len(characters)): #recorremos todos los caracteres y quitamos lo que sobra
                             c = c.replace(characters[x],"")
-                        print("Coche dado de alta para el usuario :"+c)
+                        print("Coche dado de alta para el usuario : "+c)
                 else:
                     print("Ese Usuario no existe quiere darlo de alta") #Usuario no existe
                     opcUsu=input("---> ")
@@ -73,11 +73,12 @@ while not menus:
                         nombre=input("Introduce el Nombre ")
                         tele=int(input("Introduce el Telefono "))
                         correo=input("Introduce el Correo ")
+                        tele_t=str(tele)
                         print(nombre+" con DNI :"+dni_t+" Telefono: "+tele_t+" y correo: "+correo)
                         corrrecto3=input("¿Estan los datos correctos?  ")
                         if corrrecto3 == "si" or correcto == "s":
                             a.Insertar_C(dni_t,nombre,tele_t,correo)
-                            if a.Consulta_Condicion("*","coche","Matricula="+matricula) != []:
+                            if a.Consulta_Condicion("*","coche","Matricula="+"'"+matricula+"'") != []:
                                 print("Ese vehiculo ya existe")
                             else:
                                 print("El vehiculo no existe lo damos de alta")
@@ -87,13 +88,7 @@ while not menus:
                                 characters = "[](),'" #caracteres que vamos a quitar
                                 for x in range(len(characters)): #recorremos todos los caracteres y quitamos lo que sobra
                                     c1 = c1.replace(characters[x],"")
-                                print("Se va a dar de alta un "+modelo+" "+marca+" de color "+color+" con matricula "+matricula+" Para el cliente :"+c1)
-                                opcConfirm=input(print("---> "))
-                                if opcConfirm=="si" or opcConfirm=="s":
-                                    a.Insertar_Co(matricula,dni_t,modelo,marca,color)
-                                    print("Coche dado de alta correctamente")
-                                else:
-                                    print("nada")    
+                                print("Se va a dar de alta un "+modelo+" "+marca+" de color "+color+" con matricula "+matricula+" Para el cliente :"+c1)    
                         else:
                             print("Nada")
                     else:
