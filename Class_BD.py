@@ -45,7 +45,7 @@ class BD():
     
     
 a=BD()
-# print(BD.Consulta("DNI,nombre","cliente"))  -> Ejemplo de Consulta
+#print(BD.Consulta("DNI,nombre","cliente"))  -> Ejemplo de Consulta
 # print(BD.Consulta_Condicion("*","cliente","DNI=26509218")) -> Ejemplo de consulta con condicion
 #a.Insertar_C("11111111", "manolito", "111111111", "noseesunejemplo")
 #a.Insertar_Co("5555555","26509218","Ford","Fiesta","Verde")
