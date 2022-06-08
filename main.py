@@ -1,7 +1,7 @@
 #Creación de un programa de seguimiento de un taller
 from pymysql import NULL
 import Class_BD
-import colorama
+from datetime import datetime
 from colorama import Fore, init
 a=Class_BD.BD()
 # print(a.Consulta("DNI,nombre","cliente"))
@@ -17,7 +17,8 @@ while not menus:
         print("3. Dar de alta a un Mecanico")
         print("4. Consultas")
         print("5. Abrir una averia")
-        print("6. Salir")
+        print("6. Modificaciones") #Salario de un mecanico, dueño de un coche 
+        print("7. Salir")
         print("")
         menu=int(input("---> "))
         if menu == 1:
@@ -97,10 +98,33 @@ while not menus:
                 print("nada")    
             
         elif menu == 3:
-            print()   
-                 
+            print("Hoy es dia de contrataciones")
+            b=str(len(a.Consulta("*","mecanico")))
+            print("Ahora mismo tenemos: "+b+" Mecanicos") 
+            Nombre=input("Introduce el nombre ")
+            DNIm=int(input("Introduce el DNI "))
+            Fecha=datetime.now().strftime("%Y-%m-%d") #fecha actual en el formato correcto
+            Salario=int(input("Cual será el salario de este mecanico "))
+            dni_t=str(DNIm)
+            fecha_t=str(Fecha)
+            salario_t=str(Salario)
+            print(Nombre+" con Dni: "+dni_t+" a dia "+fecha_t+" y un salario de "+salario_t)
+            correcto=input("¿Estan los datos correctos?  ")
+            if correcto == "si" or correcto == "s":
+                if a.Consulta_Condicion("*","mecanico","DNI="+dni_t) != []:
+                    print("Ya existe este mecanico artista")
+                else:
+                    a.Insertar_M(dni_t,Nombre,fecha_t,salario_t)    
+                    print("Mecanico insertado correctamente")
+            else:
+                print("anulando operacion")    
         elif menu == 4:
             print()
+            
+        elif menu == 5:
+            print()
+        elif menu == 6:
+            print()    
         else:
             menus=True
             
