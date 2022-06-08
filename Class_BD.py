@@ -43,7 +43,28 @@ class BD():
         self.mycursor.execute(self.consulta)
         self.mydb.commit()   
     
+    def Modificar_A(self,dni):
+        self.consulta="UPDATE arregla SET DNI=0 WHERE DNI="+dni
+        self.mycursor.execute(self.consulta)
+        self.mydb.commit() 
     
+    def Modificar_A_D(self,dni):
+        self.consulta="UPDATE arregla SET DNI="+dni+" WHERE DNI=0"
+        self.mycursor.execute(self.consulta)
+        self.mydb.commit() 
+     
+    def Modificar_una(self,dni,averia): 
+        self.consulta="UPDATE arregla SET DNI="+dni+" WHERE Cod_Averia="+averia
+        self.mycursor.execute(self.consulta)
+        self.mydb.commit()  
+    def Cambio_Arregla(self,horas,fecha,averia):
+        self.consulta="UPDATE arregla SET horas="+horas+",Fech_Repara='"+fecha+"' WHERE Cod_Averia="+averia
+        self.mycursor.execute(self.consulta)
+        self.mydb.commit()     
+    def Baja_M(self,dni):
+        self.consulta="DELETE FROM mecanico WHERE DNI="+dni
+        self.mycursor.execute(self.consulta)
+        self.mydb.commit()
 a=BD()
 #print(BD.Consulta("DNI,nombre","cliente"))  -> Ejemplo de Consulta
 # print(BD.Consulta_Condicion("*","cliente","DNI=26509218")) -> Ejemplo de consulta con condicion

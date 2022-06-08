@@ -1,4 +1,5 @@
 #Creación de un programa de seguimiento de un taller
+from pickle import TRUE
 from pymysql import NULL
 import Class_BD
 from datetime import datetime
@@ -6,9 +7,9 @@ from colorama import Fore, init
 a=Class_BD.BD()
 # print(a.Consulta("DNI,nombre","cliente"))
 # print(a.Consulta_Condicion("*","cliente","DNI=26509218"))
-# try:
-menus=False
-while not menus:
+try:
+    menus=False
+    while not menus:
         print("")
         print(Fore.GREEN +"Buenos dias, que desea gestionar :")
         print("")
@@ -17,7 +18,7 @@ while not menus:
         print("3. Dar de alta a un Mecanico")
         print("4. Abrir una averia")
         print("5. Consultas")
-        print("6. Modificaciones") #Salario de un mecanico, en arregla cambiar fec_rep y horas_empleadas
+        print("6. Modificaciones") 
         print("7. Dar de baja un mecanico")
         print("8. Salir")
         print("")
@@ -178,12 +179,97 @@ while not menus:
 
                 else:        
                     menu5=True
-        elif menu == 6:
-            print()   
-        elif menu== 7:
-            print()     
+        elif menu == 6:#Arregla en meacnico where dni=0 and horas=0 que son las no completadas, en arregla cambiar fec_rep y horas_empleadas
+            menu6=False
+            while not menu6:
+                print("")
+                print("1. Asignar tareas no completadas de un mecanico expulsado")
+                print("2. Completar una tarea")
+                print("3. Salir")
+                print("")
+                menu6_op=int(input("---> "))
+                if menu6_op==1:
+                    b=a.Consulta_Condicion("cod_averia,problema","arregla","dni=0 AND horas=0")
+                    if len(b)!= 0:
+                        print("tareas:")
+                        for x in range(0,len(b)):
+                            print(b[x])
+                        print("")
+                        print("1. Asignar todas a un mecanico")    
+                        print("2. Asignar una a una")
+                        menu6_op2=int(input("---> "))
+                        if menu6_op2==1:
+                            b=a.Consulta("Nombre,DNI","mecanico")
+                            for x in range(1,len(b)):
+                                print(b[x])
+                            DNIm=int(input("Introduce el DNI del mecanico: "))
+                            dni_t=str(DNIm)
+                            if a.Consulta_Condicion("*","mecanico","DNI="+dni_t) != []:
+                                print("existe todo")
+                                a.Modificar_A_D(dni_t)
+                            else:
+                                print("No existe ese mecanico")    
+                        elif menu6_op2==2:
+                            b=a.Consulta("Nombre,DNI","mecanico")
+                            for x in range(1,len(b)):
+                                print(b[x])
+                            DNIm=int(input("Introduce el DNI del mecanico: "))
+                            dni_t=str(DNIm)   
+                            orden=int(input("Introduce la orden a modificar: "))
+                            orden_7=str(orden)
+                            if a.Consulta_Condicion("*","mecanico","DNI="+dni_t) != []:
+                                if a.Consulta_Condicion("*","arregla","Cod_Averia="+orden_7) != []:
+                                    a.Modificar_una(dni_t,orden_7)
+                                else:
+                                    print("Esa orden no existe")    
+                            else:
+                                print("No existe ese mecanico")
+                        else:
+                            print("salir")        
+                    else:
+                        print("No tienes tareas sin asignar")    
+                elif menu6_op==2:
+                    print("Estas son las tareas sin completar")    
+                    b=a.Consulta_Condicion("cod_averia,matricula,problema","arregla","horas=0")
+                    if b != 0:
+                        for x in range(0,len(b)):
+                            print(b[x])
+                        horas=int(input("las horas dedicadas: "))
+                        horas_t=str(horas)   
+                        cod=int(input("El codigo de averia: "))
+                        cod_t=str(cod) 
+                        fecha=datetime.now().strftime("%Y-%m-%d")
+                        fecha_t=str(fecha)
+                        if a.Consulta_Condicion("*","arregla","Cod_Averia="+cod_t) != []:
+                            a.Cambio_Arregla(horas_t,fecha_t,cod_t)
+                            print("Cambio realizado correctamente")
+                        else:
+                            print("No existe esa orden")        
+                    else:
+                        print("No tienes tareas")    
+                else:
+                    print("salir")            
+                    menu6=True 
+        elif menu== 7: #Para dar de baja pasamos los arreglos para mecanico 0
+            print("Que mecanico quiere dar de baja")     
+            b=a.Consulta("Nombre,DNI","mecanico")
+            for x in range(1,len(b)):
+                print(b[x])
+            DNIm=int(input("Introduce el DNI del mecanico: "))
+            dni_t=str(DNIm)
+            if a.Consulta_Condicion("*","mecanico","dni="+dni_t) != []:
+                if a.Consulta_Condicion("*","arregla","dni="+dni_t) != []:
+                    print("tiene ordenes")
+                    a.Modificar_A(dni_t)
+                    a.Baja_M(dni_t)
+                else:
+                    print("dar baja")    
+                    a.Baja_M(dni_t) #Comprobar si no existe
+            else:
+                print("No existe ese mecanico")       
         else:
+            print("Salir")
             menus=True
             
-# except ValueError:
-#     print("Se ha introducido un valor no esperado")
+except ValueError:
+    print("Se ha introducido un valor no esperado")
