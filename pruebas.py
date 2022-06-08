@@ -4,7 +4,19 @@ import Class_BD
 from datetime import datetime
 
 a=Class_BD.BD()
-ahora = datetime.now()
+dni="26509218"
+averi=str(len(a.Consulta_Condicion("matricula,modelo,marca","coche","DNI="+dni)))
+coches=a.Consulta_Condicion("matricula,modelo,marca","coche","DNI="+dni)
+nombre=str(a.Consulta_Condicion("nombre","cliente","DNI="+dni))
+characters = "[](),'" #caracteres que vamos a quitar
+for x in range(len(characters)): #recorremos todos los caracteres y quitamos lo que sobra
+    nombre = nombre.replace(characters[x],"")
+print("")    
+print(nombre +" tiene un total de: "+averi+" coches")
+print("")
+print("matricula ,modelo, marca")
+print("")
+for x in range(0,len(coches)):
+    print(coches[x])
 
-# a.Insertar_M("5555555","jose","2022/07/12","1400")
-print(datetime.now().strftime("%Y-%m-%d"))
+
